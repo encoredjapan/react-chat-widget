@@ -24,8 +24,10 @@ type Props = {
   titleAvatar?: string;
   onQuickButtonClicked?: AnyFunction;
   onTextInputChange?: (event: any) => void;
+  customSendButton?: AnyFunction;
   sendButtonAlt: string;
   showTimeStamp: boolean;
+  timestampFormat: string;
 };
 
 function Conversation({
@@ -42,8 +44,10 @@ function Conversation({
   titleAvatar,
   onQuickButtonClicked,
   onTextInputChange,
+  customSendButton,
   sendButtonAlt,
-  showTimeStamp
+  showTimeStamp,
+  timestampFormat
 }: Props) {
   return (
     <div className={cn('rcw-conversation-container', className)} aria-live="polite">
@@ -54,7 +58,11 @@ function Conversation({
         showCloseButton={showCloseButton}
         titleAvatar={titleAvatar}
       />
-      <Messages profileAvatar={profileAvatar} showTimeStamp={showTimeStamp} />
+      <Messages
+        profileAvatar={profileAvatar}
+        showTimeStamp={showTimeStamp}
+        timestampFormat={timestampFormat}
+      />
       <QuickButtons onQuickButtonClicked={onQuickButtonClicked} />
       <Sender
         sendMessage={sendMessage}
@@ -62,6 +70,7 @@ function Conversation({
         disabledInput={disabledInput}
         autofocus={autofocus}
         onTextInputChange={onTextInputChange}
+        customSendButton={customSendButton}
         buttonAlt={sendButtonAlt}
       />
     </div>

@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { GlobalState } from 'src/store/types';
+import { AnyFunction } from 'src/utils/types';
 
 const send = require('../../../../../../../assets/send_button.svg') as string;
 
@@ -12,15 +13,21 @@ type Props = {
   disabledInput: boolean;
   autofocus: boolean;
   sendMessage: (event: any) => void;
+  customSendButton?: AnyFunction;
   buttonAlt: string;
   onTextInputChange?: (event: any) => void;
 }
 
-function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, buttonAlt }: Props) {
+function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInputChange, customSendButton, buttonAlt }: Props) {
   const showChat = useSelector((state: GlobalState) => state.behavior.showChat);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   // @ts-ignore
-  useEffect(() => { if (showChat) inputRef.current?.focus(); }, [showChat]);
+  useEffect(() => {
+    const needFocus = showChat && autofocus;
+    if (needFocus) {
+      inputRef.current?.focus();
+    }
+  }, [showChat]);
 
   return (
     <form className="rcw-sender" onSubmit={sendMessage}>
@@ -36,7 +43,12 @@ function Sender({ sendMessage, placeholder, disabledInput, autofocus, onTextInpu
         onChange={onTextInputChange}
       />
       <button type="submit" className="rcw-send">
+      {customSendButton ?
+        customSendButton({
+          buttonAlt,
+        }) :
         <img src={send} className="rcw-send-icon" alt={buttonAlt} />
+      }
       </button>
     </form>
   );
