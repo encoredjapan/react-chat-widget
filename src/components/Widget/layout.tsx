@@ -29,8 +29,10 @@ type Props = {
   chatId: string;
   launcherOpenLabel: string;
   launcherCloseLabel: string;
+  customSendButton?: AnyFunction;
   sendButtonAlt: string;
   showTimeStamp: boolean;
+  timestampFormat: string;
   imagePreview?: boolean;
   zoomStep?: number;
 }
@@ -52,8 +54,10 @@ function WidgetLayout({
   chatId,
   launcherOpenLabel,
   launcherCloseLabel,
+  customSendButton,
   sendButtonAlt,
   showTimeStamp,
+  timestampFormat,
   imagePreview,
   zoomStep,
 }: Props) {
@@ -74,7 +78,7 @@ function WidgetLayout({
       messageRef.current = null;
     }
   }, [showChat])
-  
+
   const eventHandle = evt => {
     if(evt.target && evt.target.className === 'rcw-message-img') {
       const { src, alt, naturalWidth, naturalHeight } = (evt.target as HTMLImageElement);
@@ -129,12 +133,20 @@ function WidgetLayout({
           className={showChat ? 'active' : 'hidden'}
           onQuickButtonClicked={onQuickButtonClicked}
           onTextInputChange={onTextInputChange}
+          customSendButton={customSendButton}
           sendButtonAlt={sendButtonAlt}
           showTimeStamp={showTimeStamp}
+          timestampFormat={timestampFormat}
         />
       }
       {customLauncher ?
-        customLauncher(onToggleConversation) :
+        customLauncher({
+          toggle: onToggleConversation,
+          chatId: chatId,
+          openLabel: launcherOpenLabel,
+          closeLabel: launcherCloseLabel,
+          showChat,
+        }) :
         !fullScreenMode &&
         <Launcher
           toggle={onToggleConversation}

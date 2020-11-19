@@ -22,8 +22,10 @@ type Props = {
   chatId: string;
   launcherOpenLabel: string;
   launcherCloseLabel: string;
+  customSendButton?: AnyFunction;
   sendButtonAlt: string;
   showTimeStamp: boolean;
+  timestampFormat: string;
   imagePreview?: boolean;
   zoomStep?: number;
   handleSubmit?: AnyFunction;
@@ -45,8 +47,10 @@ function Widget({
   chatId,
   launcherOpenLabel,
   launcherCloseLabel,
+  customSendButton,
   sendButtonAlt,
   showTimeStamp,
+  timestampFormat,
   imagePreview,
   zoomStep,
   handleSubmit
@@ -60,9 +64,9 @@ function Widget({
   const handleMessageSubmit = (event) => {
     event.preventDefault();
     const userInput = event.target.message.value;
-    
-    if (!userInput.trim()) {      
-      return;      
+
+    if (!userInput.trim()) {
+      return;
     }
 
     handleSubmit?.(userInput);
@@ -94,8 +98,10 @@ function Widget({
       chatId={chatId}
       launcherOpenLabel={launcherOpenLabel}
       launcherCloseLabel={launcherCloseLabel}
+      customSendButton={customSendButton}
       sendButtonAlt={sendButtonAlt}
       showTimeStamp={showTimeStamp}
+      timestampFormat={timestampFormat}
       imagePreview={imagePreview}
       zoomStep={zoomStep}
     />

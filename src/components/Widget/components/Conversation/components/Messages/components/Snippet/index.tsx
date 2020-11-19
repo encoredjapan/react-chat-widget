@@ -8,9 +8,10 @@ import './styles.scss';
 type Props = {
   message: Link;
   showTimeStamp: boolean;
+  timestampFormat: string;
 }
 
-function Snippet({ message, showTimeStamp }: Props) {
+function Snippet({ message, showTimeStamp, timestampFormat }: Props) {
   return (
     <div>
       <div className="rcw-snippet">
@@ -21,7 +22,7 @@ function Snippet({ message, showTimeStamp }: Props) {
           </a>
         </div>
       </div>
-      {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, 'hh:mm')}</span>}
+      {showTimeStamp && <span className="rcw-timestamp">{format(message.timestamp, timestampFormat)}</span>}
     </div>
   );
 }
