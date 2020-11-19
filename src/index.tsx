@@ -23,8 +23,10 @@ type Props = {
   chatId?: string;
   launcherOpenLabel?: string,
   launcherCloseLabel?: string,
+  sendButton?: AnyFunction;
   sendButtonAlt?: string;
   showTimeStamp?: boolean;
+  timestampFormat?: string;
   imagePreview?: boolean;
   zoomStep?: number;
   handleSubmit?: AnyFunction;
@@ -46,8 +48,10 @@ function ConnectedWidget({
   chatId,
   launcherOpenLabel,
   launcherCloseLabel,
+  sendButton,
   sendButtonAlt,
   showTimeStamp,
+  timestampFormat,
   imagePreview,
   zoomStep,
   handleSubmit
@@ -70,8 +74,10 @@ function ConnectedWidget({
         chatId={chatId}
         launcherOpenLabel={launcherOpenLabel}
         launcherCloseLabel={launcherCloseLabel}
+        customSendButton={sendButton}
         sendButtonAlt={sendButtonAlt}
         showTimeStamp={showTimeStamp}
+        timestampFormat={timestampFormat}
         imagePreview={imagePreview}
         zoomStep={zoomStep}
         handleSubmit={handleSubmit}
@@ -92,6 +98,7 @@ const defaultProps = {
   launcherCloseLabel: 'Close chat',
   sendButtonAlt: 'Send',
   showTimeStamp: true,
+  timestampFormat: 'hh:mm',
   imagePreview: false,
   zoomStep: 80,
 };
